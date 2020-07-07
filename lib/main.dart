@@ -1,78 +1,71 @@
-import 'dart:io' show Platform;
-
-import 'package:facebook_audience_network/facebook_audience_network.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_admob/firebase_admob.dart';
+
+const testDevices = "Your_DEVICE_ID";
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
+  _MyAppState createState() => _MyAppState();
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+class _MyAppState extends State<MyApp> {
+  static const MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+    testDevices: testDevices != null ? <String>['testDevices'] : null,
+    keywords: <String>['Book', 'Game'],
+    nonPersonalizedAds: true,
+  );
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  int _coins = 0;
+  RewardedVideoAd videoAd = RewardedVideoAd.instance;
 
   @override
   void initState() {
-    if (Platform.isIOS) {
-      print('is a Mac');
-    } else {
-      print('is not a Mac');
-      FacebookAudienceNetwork.init(
-        testingId: "047b690f-061d-423b-b3cd-ba53d911fdbe"
-      );
-    }
     super.initState();
+    FirebaseAdMob.instance.initialize(appId: FirebaseAdMob.testAppId);
+
+    videoAd.listener =
+        (RewardedVideoAdEvent event, {String rewardType, int rewardAmount}) {
+      print("REWARDED VIDEO AD $event");
+      if (event == RewardedVideoAdEvent.rewarded) {
+        setState(() {
+          _coins += rewardAmount;
+        });
+      }
+    };
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Rewarded Video Ad example'),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
+        body: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text('LOAD REWARDED VIDEO AD'),
+              RaisedButton(
+                child: Text("LOAD REWARDED AD"),
+                onPressed: () {
+                  videoAd.load(
+                      adUnitId: RewardedVideoAd.testAdUnitId,
+                      targetingInfo: targetingInfo);
+                },
+              ),
+              RaisedButton(
+                child: Text("SHOW REWARDED VIDEOAD"),
+                onPressed: () {
+                  videoAd.show();
+                },
+              ),
+              Text("YOU HAVE $_coins coins"),
+            ],
+          ),
+        ),
       ),
     );
   }

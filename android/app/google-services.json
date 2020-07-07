@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "126228325845",
+    "firebase_url": "https://adapp-83972.firebaseio.com",
+    "project_id": "adapp-83972",
+    "storage_bucket": "adapp-83972.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:126228325845:android:e0f228d0b65e6e5591095c",
+        "android_client_info": {
+          "package_name": "com.higgle.adapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "126228325845-176o6794drq8jp6q23d27b9oaalgc3bf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.higgle.adapp",
+            "certificate_hash": "c0519e6a16b3c3af65d5d9420ba10c7f0b4ed7ef"
+          }
+        },
+        {
+          "client_id": "126228325845-4o5uhth2sh01kee4v9c2eq579ladvbne.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmlwjReCSdPAazdifgRca77ZNNYjucHis"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "126228325845-4o5uhth2sh01kee4v9c2eq579ladvbne.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "126228325845-eran2dq3c7ukv1e78lojiv6b014anuj8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.higgle.adapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
